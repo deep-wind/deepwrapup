@@ -54,7 +54,7 @@ def read_pdf(file):
 	return all_page_text
 
 def _create_dictionary_table(text_string) -> dict:
-   
+    st.write("call1")	   
     #removing stop words
     stop_words = set(stopwords.words("english"))
     
@@ -62,7 +62,7 @@ def _create_dictionary_table(text_string) -> dict:
     
     #reducing words to their root form
     stem = PorterStemmer()
-    
+    st.write("call2")	    
     #creating dictionary for the word frequency table
     frequency_table = dict()
     for wd in words:
@@ -73,7 +73,7 @@ def _create_dictionary_table(text_string) -> dict:
             frequency_table[wd] += 1
         else:
             frequency_table[wd] = 1
-
+    st.write("call3")	
     return frequency_table
 
 
