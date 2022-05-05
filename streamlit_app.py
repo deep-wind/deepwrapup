@@ -28,7 +28,7 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 import bs4 as BeautifulSoup
 import urllib.request  
 
-import torch
+
 import json 
 from transformers import T5Tokenizer, T5ForConditionalGeneration, T5Config
 
@@ -184,7 +184,7 @@ if __name__ == '__main__':
                     
                     model = T5ForConditionalGeneration.from_pretrained('t5-small')
                     tokenizer = T5Tokenizer.from_pretrained('t5-small')
-                    device = torch.device('cpu')
+                    #device = torch.device('cpu')
                     #text=summary_results
                     # text ="""
                     # Sri Ramakrishna Engineering College (SREC) is an autonomous Engineering college in India founded by Sevaratna Dr. R. Venkatesalu. It is affiliated with the Anna University in Chennai, and approved by the All India Council for Technical Education (AICTE) of New Delhi. It is accredited by the NBA (National Board of Accreditation) for most of its courses and by the Government of Tamil Nadu.
@@ -196,7 +196,7 @@ if __name__ == '__main__':
                     t5_prepared_Text = "summarize: "+preprocess_text
                     print ("original text preprocessed: \n", preprocess_text)
                     
-                    tokenized_text = tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(device)
+                    tokenized_text = tokenizer.encode(t5_prepared_Text, return_tensors="pt")
                     
                     
                     # summmarize 
@@ -299,13 +299,13 @@ if __name__ == '__main__':
                     
                     model = T5ForConditionalGeneration.from_pretrained('t5-small')
                     tokenizer = T5Tokenizer.from_pretrained('t5-small')
-                    device = torch.device('cpu')
+                    #device = torch.device('cpu')
                     
                     preprocess_text = summary_results.strip().replace("\n","")
                     t5_prepared_Text = "summarize: "+preprocess_text
                     print ("original text preprocessed: \n", preprocess_text)
                     
-                    tokenized_text = tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(device)
+                    tokenized_text = tokenizer.encode(t5_prepared_Text, return_tensors="pt")
                     
                     
                     # summmarize 
@@ -424,13 +424,13 @@ if __name__ == '__main__':
                         
                         model = T5ForConditionalGeneration.from_pretrained('t5-small')
                         tokenizer = T5Tokenizer.from_pretrained('t5-small')
-                        device = torch.device('cpu')
+                       # device = torch.device('cpu')
                         
                         preprocess_text = summary_results.strip().replace("\n","")
                         t5_prepared_Text = "summarize: "+preprocess_text
                         print ("original text preprocessed: \n", preprocess_text)
                         
-                        tokenized_text = tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(device)
+                        tokenized_text = tokenizer.encode(t5_prepared_Text, return_tensors="pt")
                         
                         
                         # summmarize 
