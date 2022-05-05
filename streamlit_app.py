@@ -155,129 +155,129 @@ if __name__ == '__main__':
        st.sidebar.markdown("<h1 style='text-align: center; color: black;'>🧭 Navigation Bar 🧭</h1>", unsafe_allow_html=True)
        nav = st.sidebar.radio("",["URL 🏡","TEXT","FILE"])
        if nav == "URL 🏡":
-		article_read = st.text_input("Enter any URL:")
-		article_read = urllib.request.urlopen(article_read)
-		article_read = article_read.read()
-		summary_length=st.slider('Choose the threshold length of the summary [higher the threshold length,lower the summary!]', min_value=1.0, step=0.1, max_value=5.0,value=1.0)
-		st.info ('URL is good!')
-		if(st.button("summarize")):
-		    #parsing the URL content and storing in a variable
-		    article_parsed = BeautifulSoup.BeautifulSoup(article_read,'html.parser')
+	article_read = st.text_input("Enter any URL:")
+	article_read = urllib.request.urlopen(article_read)
+	article_read = article_read.read()
+	summary_length=st.slider('Choose the threshold length of the summary [higher the threshold length,lower the summary!]', min_value=1.0, step=0.1, max_value=5.0,value=1.0)
+	st.info ('URL is good!')
+	if(st.button("summarize")):
+	    #parsing the URL content and storing in a variable
+	    article_parsed = BeautifulSoup.BeautifulSoup(article_read,'html.parser')
 
-		    # #returning <p> tags
-		    paragraphs = article_parsed.find_all('p')
-		    print("fetched data:",paragraphs)
+	    # #returning <p> tags
+	    paragraphs = article_parsed.find_all('p')
+	    print("fetched data:",paragraphs)
 
-		    article_content = ''
+	    article_content = ''
 
-		    # #looping through the paragraphs and adding them to the variable
-		    for p in paragraphs:  
-			 article_content += p.text
-		    st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>TEXT</h1>", unsafe_allow_html=True)
-		    st.write(article_content)
-		    st.write("hello")	
-		    summary_results = _run_article_summary(article_content,summary_length)
-		    st.write("hello1")	
-		    st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>EXTRACTIVE SUMMARY</h1>", unsafe_allow_html=True)
-		    st.write(summary_results)
+	    # #looping through the paragraphs and adding them to the variable
+	    for p in paragraphs:  
+		 article_content += p.text
+	    st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>TEXT</h1>", unsafe_allow_html=True)
+	    st.write(article_content)
+	    st.write("hello")	
+	    summary_results = _run_article_summary(article_content,summary_length)
+	    st.write("hello1")	
+	    st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>EXTRACTIVE SUMMARY</h1>", unsafe_allow_html=True)
+	    st.write(summary_results)
 
-		    model = T5ForConditionalGeneration.from_pretrained('t5-small')
-		    tokenizer = T5Tokenizer.from_pretrained('t5-small')
-		    device = torch.device('cpu')
-		    #text=summary_results
-		    # text ="""
-		    # Sri Ramakrishna Engineering College (SREC) is an autonomous Engineering college in India founded by Sevaratna Dr. R. Venkatesalu. It is affiliated with the Anna University in Chennai, and approved by the All India Council for Technical Education (AICTE) of New Delhi. It is accredited by the NBA (National Board of Accreditation) for most of its courses and by the Government of Tamil Nadu.
-		    # The college was founded in the year 1994 by Philanthropist and Industrialist Sevaratna Dr. R. Venkatesalu. It provides various undergraduate and postgraduate courses in engineering and other technical streams. The college attained its autonomous status in 2007-2008 when Anna University was split into six different universities. SREC is one of many institutions managed by SNR Sons Charitable Trust, founded by Sevaratna Dr. R. Venkatesalu. The college covers a total area of 45 acres.
-		    # """
-
-
-		    preprocess_text = summary_results.strip().replace("\n","")
-		    t5_prepared_Text = "summarize: "+preprocess_text
-		    print ("original text preprocessed: \n", preprocess_text)
-
-		    tokenized_text = tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(device)
+	    model = T5ForConditionalGeneration.from_pretrained('t5-small')
+	    tokenizer = T5Tokenizer.from_pretrained('t5-small')
+	    device = torch.device('cpu')
+	    #text=summary_results
+	    # text ="""
+	    # Sri Ramakrishna Engineering College (SREC) is an autonomous Engineering college in India founded by Sevaratna Dr. R. Venkatesalu. It is affiliated with the Anna University in Chennai, and approved by the All India Council for Technical Education (AICTE) of New Delhi. It is accredited by the NBA (National Board of Accreditation) for most of its courses and by the Government of Tamil Nadu.
+	    # The college was founded in the year 1994 by Philanthropist and Industrialist Sevaratna Dr. R. Venkatesalu. It provides various undergraduate and postgraduate courses in engineering and other technical streams. The college attained its autonomous status in 2007-2008 when Anna University was split into six different universities. SREC is one of many institutions managed by SNR Sons Charitable Trust, founded by Sevaratna Dr. R. Venkatesalu. The college covers a total area of 45 acres.
+	    # """
 
 
-		    # summmarize 
-		    summary_ids = model.generate(tokenized_text,
-							num_beams=2,
-							no_repeat_ngram_size=1,
-							min_length=100,
-							max_length=1000,
-							early_stopping=True)
+	    preprocess_text = summary_results.strip().replace("\n","")
+	    t5_prepared_Text = "summarize: "+preprocess_text
+	    print ("original text preprocessed: \n", preprocess_text)
 
-		    output = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-
-		    print ("\n\nSummarized text: \n",output)
-		    #text = ("a young tree, vine, shrub, or herb planted or suitable for planting. b : any of a kingdom (Plantae) of multicellular eukaryotic mostly photosynthetic organisms typically lacking locomotive movement or obvious nervous or sensory organs and possessing cellulose cell")
+	    tokenized_text = tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(device)
 
 
-		    st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>ABSTRACTIVE SUMMARY</h1>", unsafe_allow_html=True)
-		    st.write(output)
+	    # summmarize 
+	    summary_ids = model.generate(tokenized_text,
+						num_beams=2,
+						no_repeat_ngram_size=1,
+						min_length=100,
+						max_length=1000,
+						early_stopping=True)
 
-		    lines=nltk.tokenize.sent_tokenize(summary_results)
-		    st.write(lines)
-		    results = encoding_sentences(lines)
+	    output = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
-
-		    st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>SUMMARY WITH IMAGES</h1>", unsafe_allow_html=True)
-		    image_path = "combined"
-		    text_image_path = "combined_text"
-
-		    #os.mkdir(image_path)
-		    j=0
-		    for k, row in enumerate(results):
-			line = row["text"]
-			st.markdown(f"### *{line}*")
-			grid = combine_images(row["unsplashIDs"])
-
-			# caption = ', '.join([f"{x:0.0f}" for x in row['scores']])
-			st.image(grid, use_column_width=True)
-			from PIL import Image, ImageFont, ImageDraw
-		       # st.write(type(grid))
-			title_font = ImageFont.truetype("PlayfairDisplay-VariableFont_wght.ttf", 100)
+	    print ("\n\nSummarized text: \n",output)
+	    #text = ("a young tree, vine, shrub, or herb planted or suitable for planting. b : any of a kingdom (Plantae) of multicellular eukaryotic mostly photosynthetic organisms typically lacking locomotive movement or obvious nervous or sensory organs and possessing cellulose cell")
 
 
-			im = Image.fromarray(grid)
-			im.save(f"{image_path}/your_file{j}.jpeg")
-			my_image = Image.open(f"{image_path}/your_file{j}.jpeg")
-			#st.image(my_image)
+	    st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>ABSTRACTIVE SUMMARY</h1>", unsafe_allow_html=True)
+	    st.write(output)
 
-			#title_text = "The Beauty of Nature"
-			image_editable = ImageDraw.Draw(my_image)
-			image_editable.text((10,15), line, (237, 230, 211),font=title_font)
-			my_image.save(f"{text_image_path}/your_file{j}.jpeg")
+	    lines=nltk.tokenize.sent_tokenize(summary_results)
+	    st.write(lines)
+	    results = encoding_sentences(lines)
 
 
-			j=j+1
+	    st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>SUMMARY WITH IMAGES</h1>", unsafe_allow_html=True)
+	    image_path = "combined"
+	    text_image_path = "combined_text"
 
-			#image = grid.save(f"{image_path}/")
+	    #os.mkdir(image_path)
+	    j=0
+	    for k, row in enumerate(results):
+		line = row["text"]
+		st.markdown(f"### *{line}*")
+		grid = combine_images(row["unsplashIDs"])
+
+		# caption = ', '.join([f"{x:0.0f}" for x in row['scores']])
+		st.image(grid, use_column_width=True)
+		from PIL import Image, ImageFont, ImageDraw
+	       # st.write(type(grid))
+		title_font = ImageFont.truetype("PlayfairDisplay-VariableFont_wght.ttf", 100)
 
 
-		    image_list = []
-		    resized_images = []
+		im = Image.fromarray(grid)
+		im.save(f"{image_path}/your_file{j}.jpeg")
+		my_image = Image.open(f"{image_path}/your_file{j}.jpeg")
+		#st.image(my_image)
 
-		    for filename in glob.glob('combined_text/*.jpeg'):
-			print(filename)
-			img = Image.open(filename)
-			image_list.append(img)
+		#title_text = "The Beauty of Nature"
+		image_editable = ImageDraw.Draw(my_image)
+		image_editable.text((10,15), line, (237, 230, 211),font=title_font)
+		my_image.save(f"{text_image_path}/your_file{j}.jpeg")
 
-		    for image in image_list:
-			image = image.resize((1100,500))
-			resized_images.append(image)
-		    i=0
-		    for (i, new) in enumerate(resized_images):
-			new.save('{}{}{}'.format('data/streamlit_image_cache1/', i+1, '.jpeg'))
 
-		    import os
-		    import moviepy.video.io.ImageSequenceClip
-		    image_folder='data/streamlit_image_cache1'
-		    fps=1
+		j=j+1
 
-		    image_files = [image_folder+'/'+img for img in os.listdir(image_folder) if img.endswith(".jpeg")]
-		    clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-		    clip.write_videofile("myvideo.mp4")
-		    st.markdown(get_binary_file_downloader_html('myvideo.mp4', 'Video Summary'), unsafe_allow_html=True)  
+		#image = grid.save(f"{image_path}/")
+
+
+	    image_list = []
+	    resized_images = []
+
+	    for filename in glob.glob('combined_text/*.jpeg'):
+		print(filename)
+		img = Image.open(filename)
+		image_list.append(img)
+
+	    for image in image_list:
+		image = image.resize((1100,500))
+		resized_images.append(image)
+	    i=0
+	    for (i, new) in enumerate(resized_images):
+		new.save('{}{}{}'.format('data/streamlit_image_cache1/', i+1, '.jpeg'))
+
+	    import os
+	    import moviepy.video.io.ImageSequenceClip
+	    image_folder='data/streamlit_image_cache1'
+	    fps=1
+
+	    image_files = [image_folder+'/'+img for img in os.listdir(image_folder) if img.endswith(".jpeg")]
+	    clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
+	    clip.write_videofile("myvideo.mp4")
+	    st.markdown(get_binary_file_downloader_html('myvideo.mp4', 'Video Summary'), unsafe_allow_html=True)  
 
 
 
