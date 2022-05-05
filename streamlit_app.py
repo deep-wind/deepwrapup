@@ -10,7 +10,7 @@ import base64
 from PIL import Image
 import os
                         
-nltk.download('all')
+#nltk.download('all')
 
 app_name = "Deep Wrap-UP"
 
