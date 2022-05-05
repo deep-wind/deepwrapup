@@ -281,7 +281,7 @@ if __name__ == '__main__':
                     image_files = [image_folder+'/'+img for img in os.listdir(image_folder) if img.endswith(".jpeg")]
                     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
                     clip.write_videofile("myvideo.mp4")
-                    st.markdown(get_binary_file_downloader_html('mini/myvideo.mp4', 'video Summary'), unsafe_allow_html=True)  
+                    st.markdown(get_binary_file_downloader_html('myvideo.mp4', 'video Summary'), unsafe_allow_html=True)  
             except:
                 st.info ('Failed to reach the server.')
 
@@ -386,13 +386,13 @@ if __name__ == '__main__':
                         
                     import os
                     import moviepy.video.io.ImageSequenceClip
-                    image_folder='C:/Users/PRAMILA/.spyder-py3/mini/data/streamlit_image_cache1'
+                    image_folder='data/streamlit_image_cache1'
                     fps=1
                     
                     image_files = [image_folder+'/'+img for img in os.listdir(image_folder) if img.endswith(".jpeg")]
                     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-                    clip.write_videofile("mini/myvideo.mp4")
-                    st.markdown(get_binary_file_downloader_html('mini/myvideo.mp4', 'Video Summary'), unsafe_allow_html=True)  
+                    clip.write_videofile("myvideo.mp4")
+                    st.markdown(get_binary_file_downloader_html('myvideo.mp4', 'Video Summary'), unsafe_allow_html=True)  
                                 
                          
             
