@@ -10,7 +10,8 @@ import base64
 from PIL import Image
 import os
 import torch
-                        
+                    
+import moviepy.video.io.ImageSequenceClip                     
 nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('stopwords')
@@ -273,8 +274,7 @@ if __name__ == '__main__':
                     for (i, new) in enumerate(resized_images):
                         new.save('{}{}{}'.format('data/streamlit_image_cache1/', i+1, '.jpeg'))
                         
-                    import os
-                    import moviepy.video.io.ImageSequenceClip
+
                     image_folder='data/streamlit_image_cache1'
                     fps=1
                     
