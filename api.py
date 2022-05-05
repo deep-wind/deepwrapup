@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from typing import List
 from pydantic import BaseModel
 
-app_name = "deep wrap-up"
+app_name = "alph-the-sacred-river"
 __version__ = "0.1.0"
 
 
