@@ -9,6 +9,7 @@ import nltk
 import base64
 from PIL import Image
 import os
+import torch
                         
 nltk.download('punkt')
 nltk.download('wordnet')
