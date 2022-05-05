@@ -135,7 +135,7 @@ def _run_article_summary(article,sentence_length):
     st.write("func4")	
     #getting the threshold
     threshold = _calculate_average_score(sentence_scores)
-     st.write("func5")	   
+    st.write("func5")	   
     #producing the summary
     article_summary = _get_article_summary(sentences, sentence_scores, sentence_length*threshold )
     st.write("func6")	
