@@ -1,5 +1,5 @@
-
-Pillow==7.2.0
+pip
+pillow==7.2.0
 ftfy==5.8
 regex==2020.11.13
 
@@ -14,7 +14,7 @@ numpy==1.19.5
 tqdm==4.55.2
 fastapi==0.61.2
 uvicorn==0.11.8
-streamlit==0.71.0
+streamlit
 nltk
 pybase64
 transformers
