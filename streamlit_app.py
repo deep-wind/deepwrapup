@@ -123,22 +123,22 @@ def _get_article_summary(sentences, sentence_weight, threshold):
     return article_summary
 
 def _run_article_summary(article,sentence_length):
-    
+    st.write("func1")	    
     #creating a dictionary for the word frequency table
     frequency_table = _create_dictionary_table(article)
-
+    st.write("func2")	
     #tokenizing the sentences
     sentences = sent_tokenize(article)
-
+    st.write("func3")	
     #algorithm for scoring a sentence by its words
     sentence_scores = _calculate_sentence_scores(sentences, frequency_table)
-
+    st.write("func4")	
     #getting the threshold
     threshold = _calculate_average_score(sentence_scores)
-    
+     st.write("func5")	   
     #producing the summary
     article_summary = _get_article_summary(sentences, sentence_scores, sentence_length*threshold )
-
+    st.write("func6")	
     return article_summary
 
 
@@ -176,12 +176,9 @@ if __name__ == '__main__':
                          article_content += p.text
                     st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>TEXT</h1>", unsafe_allow_html=True)
                     st.write(article_content)
-                    article_content ="""
-                    Sri Ramakrishna Engineering College (SREC) is an autonomous Engineering college in India founded by Sevaratna Dr. R. Venkatesalu. It is affiliated with the Anna University in Chennai, and approved by the All India Council for Technical Education (AICTE) of New Delhi. It is accredited by the NBA (National Board of Accreditation) for most of its courses and by the Government of Tamil Nadu.
-                    The college was founded in the year 1994 by Philanthropist and Industrialist Sevaratna Dr. R. Venkatesalu. It provides various undergraduate and postgraduate courses in engineering and other technical streams. The college attained its autonomous status in 2007-2008 when Anna University was split into six different universities. SREC is one of many institutions managed by SNR Sons Charitable Trust, founded by Sevaratna Dr. R. Venkatesalu. The college covers a total area of 45 acres.
-                    """
-                    			
+                    st.write("hello1")			
                     summary_results = _run_article_summary(article_content,summary_length)
+                    st.write("hello2")	
                     st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>EXTRACTIVE SUMMARY</h1>", unsafe_allow_html=True)
                     st.write(summary_results)
                     
