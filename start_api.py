@@ -7,7 +7,7 @@ if it isn't detected.
 import subprocess
 import requests
 
-api_check_url = "http://127.0.0.1:8000/"
+api_check_url = "http://127.0.0.1:8080/"
 
 try:
     r = requests.get(api_check_url)
