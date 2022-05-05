@@ -156,7 +156,6 @@ if __name__ == '__main__':
        nav = st.sidebar.radio("",["URL 🏡","TEXT","FILE"])
        if nav == "URL 🏡":
 		article_read = st.text_input("Enter any URL:")
-
 		article_read = urllib.request.urlopen(article_read)
 		article_read = article_read.read()
 		summary_length=st.slider('Choose the threshold length of the summary [higher the threshold length,lower the summary!]', min_value=1.0, step=0.1, max_value=5.0,value=1.0)
