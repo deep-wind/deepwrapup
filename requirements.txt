@@ -3,12 +3,6 @@ pillow
 click>=7.0
 ftfy==5.8
 regex
-
-
-torch==1.7.1+cpu
-torchvision==0.8.2+cpu
-
-
 pandas==1.1.5
 dspipe==0.2.3
 numpy==1.19.5
