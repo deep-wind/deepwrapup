@@ -27,4 +27,4 @@ streamlit==0.71.0
 #others
 nltk
 
-base64
+pybase64
