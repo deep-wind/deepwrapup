@@ -58,15 +58,14 @@ def read_pdf(file):
 	return all_page_text
 
 def _create_dictionary_table(text_string) -> dict:
-    st.write("call1")	   
+   
     #removing stop words
     stop_words = set(stopwords.words("english"))
     #reducing words to their root form
     stem = PorterStemmer()    
     words = word_tokenize(text_string)
     
-
-    st.write("call2")	    
+	    
     #creating dictionary for the word frequency table
     frequency_table = dict()
     for wd in words:
@@ -77,7 +76,7 @@ def _create_dictionary_table(text_string) -> dict:
             frequency_table[wd] += 1
         else:
             frequency_table[wd] = 1
-    st.write("call3")	
+
     return frequency_table
 
 
@@ -127,22 +126,17 @@ def _get_article_summary(sentences, sentence_weight, threshold):
     return article_summary
 
 def _run_article_summary(article,sentence_length):
-    st.write("func1")	    
+    
     #creating a dictionary for the word frequency table
     frequency_table = _create_dictionary_table(article)
-    st.write("func2")	
     #tokenizing the sentences
     sentences = sent_tokenize(article)
-    st.write("func3")	
     #algorithm for scoring a sentence by its words
     sentence_scores = _calculate_sentence_scores(sentences, frequency_table)
-    st.write("func4")	
     #getting the threshold
-    threshold = _calculate_average_score(sentence_scores)
-    st.write("func5")	   
+    threshold = _calculate_average_score(sentence_scores)	   
     #producing the summary
-    article_summary = _get_article_summary(sentences, sentence_scores, sentence_length*threshold )
-    st.write("func6")	
+    article_summary = _get_article_summary(sentences, sentence_scores, sentence_length*threshold )	
     return article_summary
 
 
