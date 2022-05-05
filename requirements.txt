@@ -1,5 +1,6 @@
 pip
 pillow
+click>=7.0
 ftfy==5.8
 regex==2020.11.13
 
