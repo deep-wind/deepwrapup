@@ -27,3 +27,5 @@ streamlit==0.71.0
 nltk
 pybase64
 transformers
+pdfplumber
+PyPDF2
