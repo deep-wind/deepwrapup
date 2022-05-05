@@ -11,6 +11,8 @@ from PIL import Image
 import os
                         
 nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
 
 app_name = "Deep Wrap-UP"
 
