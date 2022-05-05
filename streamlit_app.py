@@ -57,11 +57,11 @@ def _create_dictionary_table(text_string) -> dict:
     st.write("call1")	   
     #removing stop words
     stop_words = set(stopwords.words("english"))
-    
+    #reducing words to their root form
+    stem = PorterStemmer()    
     words = word_tokenize(text_string)
     
-    #reducing words to their root form
-    stem = PorterStemmer()
+
     st.write("call2")	    
     #creating dictionary for the word frequency table
     frequency_table = dict()
