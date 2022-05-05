@@ -4,6 +4,7 @@ click>=7.0
 ftfy==5.8
 regex
 torch
+torchvision
 pandas==1.1.5
 dspipe==0.2.3
 numpy==1.19.5
