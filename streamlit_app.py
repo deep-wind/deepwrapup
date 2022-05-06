@@ -454,8 +454,8 @@ if __name__ == '__main__':
                     
                         st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>SUMMARY WITH IMAGES</h1>", unsafe_allow_html=True)
 
-                        image_path = "mini/combined"
-                        text_image_path = "mini/combined_text"
+                        image_path = "combined"
+                        text_image_path = "combined_text"
                         
                         #os.mkdir(image_path)
                         j=0
