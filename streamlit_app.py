@@ -174,9 +174,9 @@ if __name__ == '__main__':
                          article_content += p.text
                     st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>TEXT</h1>", unsafe_allow_html=True)
                     st.write(article_content)
-                    st.write("hello1")			
+                    #st.write("hello1")			
                     summary_results = _run_article_summary(article_content,summary_length)
-                    st.write("hello2")	
+                    #st.write("hello2")	
                     st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>EXTRACTIVE SUMMARY</h1>", unsafe_allow_html=True)
                     st.write(summary_results)
                     
