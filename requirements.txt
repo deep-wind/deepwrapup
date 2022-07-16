@@ -1,5 +1,5 @@
 pip
-pip install --upgrade pip
+/home/appuser/venv/bin/python -m pip install --upgrade pip
 ftfy
 regex
 --find-links https://download.pytorch.org/whl/torch_stable.html
