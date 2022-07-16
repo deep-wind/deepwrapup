@@ -19,3 +19,4 @@ moviepy
 jellyfish
 matplotlib
 gTTS
+wheel==7.0
