@@ -61,15 +61,16 @@ audio_path = "audios"
 
 listdir=[image_path,text_image_path,video_path,audio_path]
 
-for i in listdir:
-    #chdir(i)
-    all_files = os.listdir(i)
-    
-    for f in all_files:
-        	try:
-        		os.remove(f)		
-        	except os.error:
-        		pass
+import os, os.path
+
+for root, _, files in os.walk(for i in listdir):
+    for f in files:
+        fullpath = os.path.join(root, f)
+        try:
+            if os.path.getsize(fullpath) < 10 * 1024:   #set file size in kb
+                os.remove(fullpath)
+        except WindowsError:
+            st.write( "Error" )
 	
 def read_pdf(file):
 	pdfReader = PdfFileReader(file)
