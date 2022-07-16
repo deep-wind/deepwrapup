@@ -320,7 +320,7 @@ if __name__ == '__main__':
                     plt.ylabel("Accuracy")
                     plt.title("Summary vs Accuracy")
                     st.pyplot(plt)
-            except e:
+            except (RuntimeError, TypeError, NameError) as e:
                 st.info ('Failed to reach the server.')
                 st.error(e)
 
