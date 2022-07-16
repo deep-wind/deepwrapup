@@ -1,13 +1,9 @@
 pip
-pillow
-ftfy==5.8
-click==7.0
 regex
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.7.1+cpu
 torchvision==0.8.2+cpu
 pandas==1.1.5
-dspipe==0.2.3
 numpy==1.19.5
 tqdm==4.55.2
 fastapi==0.61.2
