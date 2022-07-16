@@ -64,7 +64,7 @@ for i in listdir:
     
     for f in all_files:
 	try:
-		os.remove(f)
+		os.remove(f)		
 	except os.error:
 		pass
 
