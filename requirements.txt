@@ -1,4 +1,4 @@
-pip
+pip==22.1.2
 ftfy
 regex
 --find-links https://download.pytorch.org/whl/torch_stable.html
@@ -19,4 +19,4 @@ moviepy
 jellyfish
 matplotlib
 gTTS
-wheel==7.0
+
