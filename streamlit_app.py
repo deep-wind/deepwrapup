@@ -65,12 +65,12 @@ import os, os.path
 for i in listdir:
 	for root, _, files in os.walk(i):
 	    for f in files:
-		fullpath = os.path.join(root, f)
-		try:
-		    if os.path.getsize(fullpath) < 10 * 1024:   #set file size in kb
-			os.remove(fullpath)
-		except WindowsError:
-		    st.write( "Error" )
+        		fullpath = os.path.join(root, f)
+        		try:
+        		    if os.path.getsize(fullpath) < 10 * 1024:   #set file size in kb
+            			os.remove(fullpath)
+        		except WindowsError:
+        		    st.write( "Error" )
 	
 def read_pdf(file):
 	pdfReader = PdfFileReader(file)
