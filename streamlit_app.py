@@ -10,7 +10,6 @@ import base64
 from PIL import Image
 import os
 import torch
-import fitz
 import numpy as np
 import matplotlib.pyplot as plt
 import jellyfish
