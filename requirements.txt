@@ -20,3 +20,4 @@ jellyfish
 matplotlib
 gTTS
 
+click==7.1.2
