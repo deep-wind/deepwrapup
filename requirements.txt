@@ -1,6 +1,7 @@
 pip
 pillow
 ftfy==5.8
+click==7.0
 regex
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.7.1+cpu
