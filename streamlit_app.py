@@ -62,7 +62,7 @@ audio_path = "audios"
 listdir=[image_path,text_image_path,video_path,audio_path]
 
 for i in listdir:
-    chdir(i)
+    #chdir(i)
     all_files = os.listdir(i)
     
     for f in all_files:
