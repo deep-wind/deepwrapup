@@ -63,7 +63,11 @@ for i in listdir:
     all_files = os.listdir(i)
     
     for f in all_files:
-        os.remove(f)
+	try:
+	    os.remove(f)
+	except os.error:
+	    pass
+
 	
 def read_pdf(file):
 	pdfReader = PdfFileReader(file)
