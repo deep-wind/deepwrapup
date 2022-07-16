@@ -19,3 +19,5 @@ transformers==2.8.0
 pdfplumber
 PyPDF2
 moviepy
+os
+jellyfish
