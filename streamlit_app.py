@@ -16,7 +16,8 @@ import jellyfish
 import textwrap
 from gtts import gTTS
                     
-import moviepy.video.io.ImageSequenceClip                     
+import moviepy.video.io.ImageSequenceClip     
+from moviepy.editor import *
 nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('stopwords')
