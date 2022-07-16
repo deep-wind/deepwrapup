@@ -322,7 +322,7 @@ if __name__ == '__main__':
                     st.pyplot(plt)
             except e:
                 st.info ('Failed to reach the server.')
-		st.error(e)
+                st.error(e)
 
                 
        if nav == "TEXT":
