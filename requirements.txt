@@ -1,5 +1,3 @@
-pip
-pip install --force-reinstall pip
 ftfy
 regex
 --find-links https://download.pytorch.org/whl/torch_stable.html
