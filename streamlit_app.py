@@ -14,6 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import jellyfish
 import textwrap
+from gtts import gTTS
                     
 import moviepy.video.io.ImageSequenceClip                     
 nltk.download('punkt')
