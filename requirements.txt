@@ -18,3 +18,4 @@ PyPDF2
 moviepy
 jellyfish
 matplotlib
+gTTS
