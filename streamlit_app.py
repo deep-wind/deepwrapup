@@ -294,7 +294,7 @@ if __name__ == '__main__':
 
                                        
                     L =[]                   
-                    for root, dirs, files in os.walk(r"C:\Users\PRAMILA\.spyder-py3\mini\videos"):
+                    for root, dirs, files in os.walk("videos"):
                         for file in files:
                             if os.path.splitext(file)[1] == '.mp4':
                                 filePath = os.path.join(root, file)
@@ -302,8 +302,8 @@ if __name__ == '__main__':
                                 L.append(video)
                     
                     final_clip = concatenate_videoclips(L)
-                    final_clip.to_videofile(r"C:/Users/PRAMILA/.spyder-py3/mini/myvideo.mp4", fps=24, remove_temp=False)
-                    st.markdown(get_binary_file_downloader_html('C:/Users/PRAMILA/.spyder-py3/mini/myvideo.mp4', 'video Summary'), unsafe_allow_html=True)  
+                    final_clip.to_videofile("myvideo.mp4", fps=24, remove_temp=False)
+                    st.markdown(get_binary_file_downloader_html('myvideo.mp4', 'video Summary'), unsafe_allow_html=True)  
                     ex_acc=(jellyfish.jaro_distance(article_content,summary_results)+0.15)*100
                     abs_acc=(jellyfish.jaro_distance(article_content,output)+0.10)*100
                     data = {'Extractive Summary':ex_acc, 'Abstractive Summary':abs_acc}
@@ -320,8 +320,9 @@ if __name__ == '__main__':
                     plt.ylabel("Accuracy")
                     plt.title("Summary vs Accuracy")
                     st.pyplot(plt)
-            except:
+            except e:
                 st.info ('Failed to reach the server.')
+		st.error(e)
 
                 
        if nav == "TEXT":
