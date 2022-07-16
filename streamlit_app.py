@@ -52,10 +52,10 @@ import pdfplumber
 
 from PyPDF2 import PdfFileReader
 
-image_path = "combined/"
-text_image_path = "combined_text/"
-video_path = "videos/"      
-audio_path = "audios/" 
+image_path = "combined"
+text_image_path = "combined_text"
+video_path = "videos"      
+audio_path = "audios" 
 
 
 listdir=[image_path,text_image_path,video_path,audio_path]
