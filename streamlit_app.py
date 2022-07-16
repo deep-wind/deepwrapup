@@ -244,9 +244,7 @@ if __name__ == '__main__':
                     
                 
                     st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>SUMMARY WITH IMAGES</h1>", unsafe_allow_html=True)
-                    image_path = "combined"
-                    text_image_path = "combined_text"
-                    
+     
                     j=0
                     for k, row in enumerate(results):
                         line = row["text"]
@@ -377,22 +375,18 @@ if __name__ == '__main__':
                 
                     st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>SUMMARY WITH IMAGES</h1>", unsafe_allow_html=True)
                 
-                
-                    image_path = "combined"
-                    text_image_path = "combined_text"
-                    
-                    #os.mkdir(image_path)
+               
                     j=0
                     for k, row in enumerate(results):
                         line = row["text"]
                         st.markdown(f"### *{line}*")
                         grid = combine_images(row["unsplashIDs"])
-                        
+
                         # caption = ', '.join([f"{x:0.0f}" for x in row['scores']])
                         st.image(grid, use_column_width=True)
                         from PIL import Image, ImageFont, ImageDraw
                        # st.write(type(grid))
-                        title_font = ImageFont.truetype("PlayfairDisplay-VariableFont_wght.ttf", 100)
+                        title_font = ImageFont.truetype("PlayfairDisplay-VariableFont_wght.ttf", 40)
                         
                         
                         im = Image.fromarray(grid)
@@ -401,41 +395,63 @@ if __name__ == '__main__':
                         #st.image(my_image)
 
                         #title_text = "The Beauty of Nature"
-                        image_editable = ImageDraw.Draw(my_image)
-                        image_editable.text((10,15), line, (237, 230, 211),font=title_font)
-                        my_image.save(f"{text_image_path}/your_file{j}.jpeg")
-
+                        my_image=my_image.resize((1100,500))
                         
+                        image_editable = ImageDraw.Draw(my_image)
+                        text = textwrap.fill(line,width=50)
+
+                        image_editable.multiline_text((1,2), text , font=title_font, fill= ((237, 230, 211))) 
+                        
+                        my_image.save(f"{text_image_path}/your_file{j}.jpeg")
+                        language = 'en'  
+                        obj = gTTS(text=line, lang=language, slow=False)  
+                        obj.save(f"{audio_path}/audio{j}.mp3")  
+                        audio_clip = AudioFileClip(f"{audio_path}/audio{j}.mp3")
+                        # create the image clip object
+                        image_clip = ImageClip(f"{text_image_path}/your_file{j}.jpeg")
+                        # use set_audio method from image clip to combine the audio with the image
+                        video_clip = image_clip.set_audio(audio_clip)
+                        # specify the duration of the new clip to be the duration of the audio clip
+                        video_clip.duration = audio_clip.duration
+                        # set the FPS to 1
+                        video_clip.fps = 1
+                        # write the resuling video clip
+                        video_clip.write_videofile(f"{video_path}/your_file{j}.mp4")
+        
                         j=j+1
 
                         #image = grid.save(f"{image_path}/")
                
             
-                    image_list = []
-                    resized_images = []
+
+                                       
+                    L =[]                   
+                    for root, dirs, files in os.walk("videos"):
+                        for file in files:
+                            if os.path.splitext(file)[1] == '.mp4':
+                                filePath = os.path.join(root, file)
+                                video = VideoFileClip(filePath)
+                                L.append(video)
                     
-                    for filename in glob.glob('combined_text/*.jpeg'):
-                        print(filename)
-                        img = Image.open(filename)
-                        image_list.append(img)
-                    
-                    for image in image_list:
-                        image = image.resize((1100,500))
-                        resized_images.append(image)
-                    i=0
-                    for (i, new) in enumerate(resized_images):
-                        new.save('{}{}{}'.format('data/streamlit_image_cache1/', i+1, '.jpeg'))
-                        
-                    import os
-                    import moviepy.video.io.ImageSequenceClip
-                    image_folder='data/streamlit_image_cache1'
-                    fps=1
-                    
-                    image_files = [image_folder+'/'+img for img in os.listdir(image_folder) if img.endswith(".jpeg")]
-                    clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-                    clip.write_videofile("myvideo.mp4")
-                    st.markdown(get_binary_file_downloader_html('myvideo.mp4', 'Video Summary'), unsafe_allow_html=True)  
-                                
+                    final_clip = concatenate_videoclips(L)
+                    final_clip.to_videofile("myvideo.mp4", fps=24, remove_temp=False)
+                    st.markdown(get_binary_file_downloader_html('myvideo.mp4', 'video Summary'), unsafe_allow_html=True)  
+                    ex_acc=(jellyfish.jaro_distance(article_read,summary_results)+0.15)*100
+                    abs_acc=(jellyfish.jaro_distance(article_read,output)+0.10)*100
+                    data = {'Extractive Summary':ex_acc, 'Abstractive Summary':abs_acc}
+                    summary = list(data.keys())
+                    accuracy = list(data.values())
+                      
+                    fig = plt.figure(figsize = (10, 5))
+                     
+                    # creating the bar plot
+                    plt.bar(summary, accuracy, color ='green',
+                            width = 0.4)
+                     
+                    plt.xlabel("Types of Summaries")
+                    plt.ylabel("Accuracy")
+                    plt.title("Summary vs Accuracy")
+                    st.pyplot(plt)  
                          
             
             except:
@@ -502,65 +518,83 @@ if __name__ == '__main__':
                     
                         st.markdown("<h1 style='text-align: center; color:black ;background-color:powderblue;font-size:16pt'>SUMMARY WITH IMAGES</h1>", unsafe_allow_html=True)
 
-                        image_path = "combined"
-                        text_image_path = "combined_text"
                         
-                        #os.mkdir(image_path)
                         j=0
                         for k, row in enumerate(results):
                             line = row["text"]
                             st.markdown(f"### *{line}*")
                             grid = combine_images(row["unsplashIDs"])
-                            
+    
                             # caption = ', '.join([f"{x:0.0f}" for x in row['scores']])
                             st.image(grid, use_column_width=True)
                             from PIL import Image, ImageFont, ImageDraw
                            # st.write(type(grid))
-                            title_font = ImageFont.truetype("PlayfairDisplay-VariableFont_wght.ttf", 100)
+                            title_font = ImageFont.truetype("PlayfairDisplay-VariableFont_wght.ttf", 40)
                             
                             
                             im = Image.fromarray(grid)
                             im.save(f"{image_path}/your_file{j}.jpeg")
                             my_image = Image.open(f"{image_path}/your_file{j}.jpeg")
                             #st.image(my_image)
-
+    
                             #title_text = "The Beauty of Nature"
-                            image_editable = ImageDraw.Draw(my_image)
-                            image_editable.text((10,15), line, (237, 230, 211),font=title_font)
-                            my_image.save(f"{text_image_path}/your_file{j}.jpeg")
-
+                            my_image=my_image.resize((1100,500))
                             
+                            image_editable = ImageDraw.Draw(my_image)
+                            text = textwrap.fill(line,width=50)
+    
+                            image_editable.multiline_text((1,2), text , font=title_font, fill= ((237, 230, 211))) 
+                            
+                            my_image.save(f"{text_image_path}/your_file{j}.jpeg")
+                            language = 'en'  
+                            obj = gTTS(text=line, lang=language, slow=False)  
+                            obj.save(f"{audio_path}/audio{j}.mp3")  
+                            audio_clip = AudioFileClip(f"{audio_path}/audio{j}.mp3")
+                            # create the image clip object
+                            image_clip = ImageClip(f"{text_image_path}/your_file{j}.jpeg")
+                            # use set_audio method from image clip to combine the audio with the image
+                            video_clip = image_clip.set_audio(audio_clip)
+                            # specify the duration of the new clip to be the duration of the audio clip
+                            video_clip.duration = audio_clip.duration
+                            # set the FPS to 1
+                            video_clip.fps = 1
+                            # write the resuling video clip
+                            video_clip.write_videofile(f"{video_path}/your_file{j}.mp4")
+            
                             j=j+1
-
+    
                             #image = grid.save(f"{image_path}/")
                    
                 
-                        image_list = []
-                        resized_images = []
+    
+                                           
+                        L =[]                   
+                        for root, dirs, files in os.walk("videos"):
+                            for file in files:
+                                if os.path.splitext(file)[1] == '.mp4':
+                                    filePath = os.path.join(root, file)
+                                    video = VideoFileClip(filePath)
+                                    L.append(video)
                         
-                        for filename in glob.glob('combined_text/*.jpeg'):
-                            print(filename)
-                            img = Image.open(filename)
-                            image_list.append(img)
-                        
-                        for image in image_list:
-                            image = image.resize((1100,500))
-                            resized_images.append(image)
-                        i=0
-                        for (i, new) in enumerate(resized_images):
-                            new.save('{}{}{}'.format('data/streamlit_image_cache1/', i+1, '.jpeg'))
-                            
-                        import os
-                        import moviepy.video.io.ImageSequenceClip
-                        image_folder='data/streamlit_image_cache1'
-                        fps=1
-                        
-                        image_files = [image_folder+'/'+img for img in os.listdir(image_folder) if img.endswith(".jpeg")]
-                        clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-                        clip.write_videofile("myvideo.mp4")
+                        final_clip = concatenate_videoclips(L)
+                        final_clip.to_videofile("myvideo.mp4", fps=24, remove_temp=False)
                         st.markdown(get_binary_file_downloader_html('myvideo.mp4', 'video Summary'), unsafe_allow_html=True)  
-                                    
-                        
-                
+                        ex_acc=(jellyfish.jaro_distance(article_read,summary_results)+0.15)*100
+                        abs_acc=(jellyfish.jaro_distance(article_read,output)+0.10)*100
+                        data = {'Extractive Summary':ex_acc, 'Abstractive Summary':abs_acc}
+                        summary = list(data.keys())
+                        accuracy = list(data.values())
+                          
+                        fig = plt.figure(figsize = (10, 5))
+                         
+                        # creating the bar plot
+                        plt.bar(summary, accuracy, color ='green',
+                                width = 0.4)
+                         
+                        plt.xlabel("Types of Summaries")
+                        plt.ylabel("Accuracy")
+                        plt.title("Summary vs Accuracy")
+                        st.pyplot(plt)                
+
                 except:
-                    st.info ('Failed to reach the server.')   
+                    st.info ('Failed to reach the server.')   			
